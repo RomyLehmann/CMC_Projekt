@@ -1,0 +1,85 @@
+﻿<Window x:Class="CMC_Projekt.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CMC System" 
+        Height="1000" Width="996"
+        Background="White">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Kopfzeile mit Menü-Button -->
+        <Border Grid.Row="0" Background="#2C3E50" Grid.ColumnSpan="2">
+            <Button x:Name="btnMenu" 
+                    Content="☰ Menü"
+                    Width="100" 
+                    Height="35"
+                    HorizontalAlignment="Left"
+                    Margin="10,0,0,0"
+                    Background="Transparent"
+                    Foreground="White"
+                    BorderThickness="1"
+                    BorderBrush="White"
+                    FontSize="14"
+                    Cursor="Hand"
+                    Click="btnMenu_Click"/>
+        </Border>
+
+        <!-- Hauptbereich mit Menü und Content nebeneinander -->
+        <Grid Margin="2,37,-2,13" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Ausklappbares Menü -->
+            <Border x:Name="MenuPanel" 
+                    Grid.Column="0"
+                    Width="250" 
+                    Background="#DCDCDC"
+                    BorderBrush="#A9A9A9"
+                    BorderThickness="0,0,1,0"
+                    Visibility="Collapsed">
+                <StackPanel Margin="10,20,10,10">
+                    <Button x:Name="btnStationskarte"
+                            Content="Stationskarte" 
+                            Height="45" 
+                            Margin="0,5"
+                            FontSize="14"
+                            Click="btnStationskarte_Click"/>
+                    <Button x:Name="btnUebersicht"
+                            Content="Übersicht" 
+                            Height="45" 
+                            Margin="0,5"
+                            FontSize="14"
+                            Click="btnUebersicht_Click"/>
+                    <Button x:Name="btnAenderungen"
+                            Content="Änderungen" 
+                            Height="45" 
+                            Margin="0,5"
+                            FontSize="14"
+                            Click="btnAenderungen_Click"/>
+
+                    <Button x:Name="btnNeuesGeraet"
+                            Content="Neues Gerät hinzufügen" 
+                            Height="45" 
+                            Margin="0,5"
+                            FontSize="14"
+                          />
+                </StackPanel>
+            </Border>
+
+            <!-- Hauptbereich (weiß) -->
+            <Grid Grid.Column="1" Background="White">
+
+
+                <!-- ContentControl - HIER WECHSELN DIE SEITEN -->
+                <ContentControl x:Name="MainContent"/>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

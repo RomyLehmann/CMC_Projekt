@@ -1,0 +1,483 @@
+﻿<UserControl x:Class="CMC_Projekt.View.MapView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+    <Grid>
+        <!-- Stationskarte EXAKT nach Screenshot -->
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Border Width="957" Height="900" 
+            BorderBrush="Black" 
+            BorderThickness="2"
+            Background="WhiteSmoke">
+
+                <Canvas>
+
+                    <!-- OBERER BEREICH: Aufenthaltsraum (Trapez angedeutet) -->
+                    <!-- Horizontaler Hauptgang -->
+                    <!-- Zimmer 7 (oben links unten) -->
+                    <!-- Mittlerer Raum rechts -->
+                    <!-- Rechter Block unten -->
+                    <Rectangle Canvas.Left="716" Canvas.Top="664"
+                       Width="136" Height="100"
+                       Fill="#F5F5F5" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                    <!-- Mittlerer Raum rechts -->
+                    <Rectangle Canvas.Left="638" Canvas.Top="664"
+                       Width="78" Height="100"
+                       Fill="#F5F5F5" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                    <!-- Zimmer 7 (oben links unten) -->
+                    <Rectangle Canvas.Left="240" Canvas.Top="287"
+                       Width="131" Height="70"
+                       Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="253" Canvas.Top="293"
+                       Text="2-Bettzimmer" FontSize="10" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Width="77"/>
+                    <!-- Horizontaler Hauptgang -->
+                    <Rectangle Canvas.Left="371" Canvas.Top="81"
+                       Width="249" Height="451"
+                       Fill="LightGray" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                    <!-- OBERER BEREICH: Aufenthaltsraum (Trapez angedeutet) -->
+                    <Polygon Points="420,20 587,20 627,80 380,80"
+                     Fill="#FFE0B2" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="-6" Width="628"/>
+                    <TextBlock Canvas.Left="440" Canvas.Top="45"
+                       Text="Aufenthaltsraum" FontSize="12" FontWeight="Bold"/>
+
+                    <!-- Zimmer 1 (oben links) -->
+                    <Rectangle Canvas.Left="240" Canvas.Top="81"
+                       Width="131" Height="70"
+                       Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="254" Canvas.Top="86"
+                       Text="2-Bettzimmer" FontSize="10" FontWeight="Bold"/>
+                    <Ellipse Canvas.Left="271" Canvas.Top="109"
+                     Width="14" Height="14"
+                     Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="1|B001|Frei|Sauber"/>
+                    <Ellipse Canvas.Left="301" Canvas.Top="109"
+                     Width="14" Height="14"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="1|B001-2|Belegt|Sauber"/>
+
+                    <!-- Zimmer 2 (mitte links) -->
+                    <Rectangle Canvas.Left="240" Canvas.Top="149"
+                       Width="131" Height="70"
+                       Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="254" Canvas.Top="154"
+                       Text="2-Bettzimmer" FontSize="10" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Ellipse Canvas.Left="268" Canvas.Top="179"
+                     Width="14" Height="14"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="2|B002|Belegt|Sauber"/>
+                    <Ellipse Canvas.Left="298" Canvas.Top="179"
+                     Width="14" Height="14"
+                     Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="2|B002-2|Frei|Sauber"/>
+
+                    <!-- WC rechts neben Zimmer 2 -->
+                    <Rectangle Canvas.Left="331" Canvas.Top="134"
+                       Width="40" Height="35"
+                       Fill="#E1F5FE" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="343" Canvas.Top="146"
+                       Text="WC" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                    <!-- Zimmer 3 (unten links) -->
+                    <Rectangle Canvas.Left="240" Canvas.Top="218"
+                       Width="131" Height="70"
+                       Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="254" Canvas.Top="225"
+                       Text="2-Bettzimmer" FontSize="10" FontWeight="Bold"/>
+                    <Ellipse Canvas.Left="265" Canvas.Top="250"
+                     Width="14" Height="14"
+                     Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="3|B003|Frei|Sauber"/>
+                    <Ellipse Canvas.Left="295" Canvas.Top="250"
+                     Width="14" Height="14"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="3|B003-2|Belegt|Nicht sauber"/>
+
+                    <!-- WC rechts neben Zimmer 3 -->
+                    <Rectangle Canvas.Left="331" Canvas.Top="270"
+                       Width="40" Height="35"
+                       Fill="#E1F5FE" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="343" Canvas.Top="282"
+                       Text="WC" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                    <!-- Zimmer 4 (oben rechts) -->
+                    <Rectangle Canvas.Left="620" Canvas.Top="151"
+                       Width="131" Height="70"
+                       Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="663" Canvas.Top="156"
+                       FontSize="10" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Width="77"><Run Language="de-de" Text="1"/><Run Text="-Bettzimmer"/></TextBlock>
+                    <Ellipse Canvas.Left="700" Canvas.Top="182"
+                     Width="14" Height="14"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="4|B004|Belegt|Sauber"/>
+
+                    <Rectangle Canvas.Left="620" Canvas.Top="151"
+                       Width="31" Height="28"
+                       Fill="#E1F5FE" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="627" Canvas.Top="158"
+                       Text="WC" FontSize="9" Height="14" Width="17"/>
+
+                    <!-- Zimmer 5 (mitte rechts) -->
+                    <Rectangle Canvas.Left="620" Canvas.Top="220"
+                       Width="131" Height="68"
+                       Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="662" Canvas.Top="222"
+                       Text="2-Bettzimmer" FontSize="10" FontWeight="Bold"/>
+                    <Ellipse Canvas.Left="662" Canvas.Top="246"
+                     Width="14" Height="14"
+                     Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="5|B005|Frei|Sauber"/>
+                    <Ellipse Canvas.Left="700" Canvas.Top="246"
+                     Width="14" Height="14"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="5|B005-2|Belegt|Nicht sauber"/>
+
+                    <!-- Zimmer 6 (unten rechts) -->
+                    <Rectangle Canvas.Left="620" Canvas.Top="287"
+                       Width="131" Height="69"
+                       Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="660" Canvas.Top="297"
+                       Text="2-Bettzimmer" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Width="79"/>
+                    <Ellipse Canvas.Left="670" Canvas.Top="323"
+                     Width="14" Height="14"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="6|B006|Belegt|Sauber"/>
+                    <Ellipse Canvas.Left="700" Canvas.Top="323"
+                     Width="14" Height="14"
+                     Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="6|B006-2|Frei|Sauber"/>
+
+                    <!-- Ganz rechts oben: Treppe -->
+                    <Rectangle Canvas.Left="620" Canvas.Top="81"
+                       Width="131" Height="70"
+                       Fill="#BDBDBD" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="670" Canvas.Top="109"
+                       Text="Treppe" FontSize="11" FontWeight="Bold"/>
+
+                    <TextBlock Canvas.Left="463" Canvas.Top="366"
+                       Text="Hauptgang" FontSize="14" FontWeight="Bold"/>
+
+                    <Rectangle Canvas.Left="620" Canvas.Top="272"
+                       Width="35" Height="30"
+                       Fill="#E1F5FE" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="630" Canvas.Top="282"
+                       Text="WC" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                    <!-- Raum ganz rechts in der Mitte (Labor) -->
+                    <Rectangle Canvas.Left="868" Canvas.Top="461"
+                       Width="56" Height="71"
+                       Fill="#FFE0B2" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="880" Canvas.Top="489"
+                       Text="Labor" FontSize="10" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="32"/>
+
+                    <Ellipse Canvas.Left="265" Canvas.Top="316"
+                     Width="14" Height="14"
+                     Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="7|B007|Frei|Sauber"/>
+                    <Ellipse Canvas.Left="295" Canvas.Top="316"
+                     Width="14" Height="14"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="7|B007-2|Belegt|Sauber"/>
+
+                    <!-- Zimmer 8 (mitte links unten) -->
+                    <Rectangle Canvas.Left="240" Canvas.Top="356"
+                       Width="131" Height="70"
+                       Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="257" Canvas.Top="362"
+                       Text="2-Bettzimmer" FontSize="10" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Width="78"/>
+                    <Ellipse Canvas.Left="265" Canvas.Top="380"
+                     Width="14" Height="14"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="8|B008|Belegt|Nicht sauber"/>
+                    <Ellipse Canvas.Left="295" Canvas.Top="380"
+                     Width="14" Height="14"
+                     Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="8|B008-2|Frei|Sauber"/>
+
+                    <!-- Zimmer 9 (unten links unten) -->
+                    <Rectangle Canvas.Left="194" Canvas.Top="401"
+                       Width="84" Height="131"
+                       Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="198" Canvas.Top="417"
+                       Text="2-Bettzimmer" FontSize="10" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Ellipse Canvas.Left="210" Canvas.Top="468"
+                     Width="14" Height="14"
+                     Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="9|B009|Frei|Sauber" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <Ellipse Canvas.Left="240" Canvas.Top="468"
+                     Width="14" Height="14"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="9|B009-2|Belegt|Sauber" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                    <!-- Zimmer 10 (oben rechts unten) -->
+                    <Rectangle Canvas.Left="620" Canvas.Top="355"
+                       Width="131" Height="70"
+                       Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="660" Canvas.Top="361"
+                       Text="2-Bettzimmer" FontSize="10" FontWeight="Bold"/>
+                    <Ellipse Canvas.Left="670" Canvas.Top="383"
+                     Width="14" Height="14"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="10|B010|Belegt|Sauber"/>
+                    <Ellipse Canvas.Left="700" Canvas.Top="383"
+                     Width="14" Height="14"
+                     Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="10|B010-2|Frei|Sauber"/>
+
+                    <!-- Zimmer 11 (mitte rechts unten) -->
+                    <Rectangle Canvas.Left="712" Canvas.Top="401"
+                       Width="86" Height="131"
+                       Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Rectangle.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                    <TextBlock Canvas.Left="727" Canvas.Top="415"
+                       Text="2-Bettzimmer" FontSize="10" FontWeight="Bold"/>
+                    <Ellipse Canvas.Left="738" Canvas.Top="461"
+                     Width="14" Height="14"
+                     Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="11|B011|Frei|Sauber"/>
+                    <Ellipse Canvas.Left="768" Canvas.Top="461"
+                     Width="14" Height="14"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="11|B011-2|Belegt|Nicht sauber"/>
+
+                    <!-- Zimmer 12 (unten rechts unten) -->
+                    <Rectangle Canvas.Left="798" Canvas.Top="401"
+                       Width="70" Height="131"
+                       Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="801" Canvas.Top="414"
+                       Text="2-Bettzimmer" FontSize="10" FontWeight="Bold"/>
+                    <Ellipse Canvas.Left="808" Canvas.Top="460"
+                     Width="14" Height="14"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="12|B012|Belegt|Sauber"/>
+                    <Ellipse Canvas.Left="838" Canvas.Top="460"
+                     Width="14" Height="14"
+                     Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                     Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                     Tag="12|B012-2|Frei|Sauber"/>
+
+                    <!-- UNTERER VERBINDUNGSGANG -->
+                    <Rectangle Canvas.Left="69" Canvas.Top="532"
+                       Width="855" Height="132"
+                       Fill="LightGray" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                    <!-- Linker Block unten -->
+                    <Rectangle Canvas.Left="176" Canvas.Top="664"
+                       Width="120" Height="100"
+                       Fill="#F5F5F5" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                    <!-- Treppe links -->
+                    <Rectangle Canvas.Left="296" Canvas.Top="664"
+                       Width="101" Height="100"
+                       Fill="#BDBDBD" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="326" Canvas.Top="709"
+                       Text="Treppe" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                    <!-- Mittlerer Raum -->
+                    <Rectangle Canvas.Left="397" Canvas.Top="664"
+                       Width="241" Height="100"
+                       Fill="#F5F5F5" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                    <!-- Treppe rechts -->
+                    <Rectangle Canvas.Left="852" Canvas.Top="664"
+                       Width="72" Height="100"
+                       Fill="#BDBDBD" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="868" Canvas.Top="709"
+                       Text="Treppe" FontSize="11" FontWeight="Bold"/>
+
+                    <!-- Legende -->
+                    <Rectangle Canvas.Left="60" Canvas.Top="772"
+                       Width="108" Height="114"
+                       Fill="White" Stroke="Black" StrokeThickness="2"/>
+                    <TextBlock Canvas.Left="68" Canvas.Top="780"
+                       Text="Legende" FontSize="9" FontWeight="Bold" Height="16" Width="56"/>
+                    <Ellipse Canvas.Left="72" Canvas.Top="808"
+                     Width="16" Height="14"
+                     Fill="Green" Stroke="DarkGreen" StrokeThickness="2"/>
+                    <TextBlock Canvas.Left="94" Canvas.Top="806"
+                       Text="frei" FontSize="8" Height="14" Width="18"/>
+                    <Ellipse Canvas.Left="72" Canvas.Top="836"
+                     Width="16" Height="16"
+                     Fill="Red" Stroke="DarkRed" StrokeThickness="2"/>
+                    <TextBlock Canvas.Left="94" Canvas.Top="834"
+                       Text="belegt" FontSize="8" Height="16" Width="34"/>
+                    <Rectangle Canvas.Left="686" Canvas.Top="418"
+                       Width="40" Height="35"
+                       Fill="#E1F5FE" Stroke="Black" StrokeThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Rectangle.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="34.107"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                    <TextBlock Canvas.Left="702" Canvas.Top="430"
+                       Text="WC" FontSize="9"/>
+                    <Rectangle Canvas.Left="259" Canvas.Top="418"
+                       Width="40" Height="35"
+                       Fill="#E1F5FE" Stroke="Black" StrokeThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Rectangle.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-45.354"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                    <TextBlock Canvas.Left="268" Canvas.Top="431"
+                       Text="WC" FontSize="9"/>
+                    <Rectangle Canvas.Left="835" Canvas.Top="502"
+                       Width="33" Height="30"
+                       Fill="#E1F5FE" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="844" Canvas.Top="513"
+                       Text="WC" FontSize="9" Height="16" Width="16"/>
+                    <Rectangle Canvas.Left="775" Canvas.Top="514"
+                       Width="23" Height="18"
+                       Fill="#FFF9C4" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="780" Canvas.Top="514"
+                       Text="X" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Rectangle Canvas.Left="69" Canvas.Top="401"
+                Width="125" Height="131"
+                Fill="LightBlue" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="95" Canvas.Top="418"
+                FontSize="10" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Language="de-de" Text="4"/><Run Text="-Bettzimmer"/></TextBlock>
+                    <Ellipse Canvas.Left="102" Canvas.Top="468"
+                Width="14" Height="14"
+                Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                Tag="9|B009|Frei|Sauber" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Ellipse Canvas.Left="132" Canvas.Top="468"
+                Width="14" Height="14"
+                Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                Tag="9|B009-2|Belegt|Sauber" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Rectangle Canvas.Left="69" Canvas.Top="664"
+                Width="107" Height="100"
+                Fill="#F5F5F5" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="458" Canvas.Top="589"
+                Text="Hauptgang" FontSize="14" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Rectangle Canvas.Left="557" Canvas.Top="664"
+                Width="81" Height="50"
+                Fill="#F5F5F5" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Rectangle Canvas.Left="431" Canvas.Top="613"
+                Width="139" Height="17"
+                Fill="#F5F575" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Rectangle Canvas.Left="111" Canvas.Top="496"
+                Width="40" Height="35"
+                Fill="#E1F5FE" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="124" Canvas.Top="508"
+                Text="WC" FontSize="9" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Ellipse Canvas.Left="102" Canvas.Top="441"
+                Width="14" Height="14"
+                Fill="Green" Stroke="DarkGreen" StrokeThickness="2"
+                Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                Tag="9|B009|Frei|Sauber" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <Ellipse Canvas.Left="132" Canvas.Top="441"
+                Width="14" Height="14"
+                Fill="Red" Stroke="DarkRed" StrokeThickness="2"
+                Cursor="Hand" MouseLeftButtonDown="Bett_Click"
+                Tag="9|B009-2|Belegt|Sauber" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                </Canvas>
+            </Border>
+
+        </ScrollViewer>
+        
+        <!-- Popup für Bettinformationen (bleibt über allen Seiten) -->
+        <Border x:Name="BettInfoPopup"
+        Width="300"
+        Height="210"
+        Background="White"
+        BorderBrush="Black"
+        BorderThickness="2"
+        CornerRadius="5"
+        Visibility="Collapsed"
+        Panel.ZIndex="1000"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="5" Opacity="0.5"/>
+            </Border.Effect>
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="PopupTransform"/>
+            </Border.RenderTransform>
+
+            <Grid Margin="20">
+                <!-- X rechts oben -->
+                <Button Content="X"
+                Width="22"
+                Height="22"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Foreground="Black"
+                FontWeight="Bold"
+                Padding="0"
+                Click="ClosePopup_Click"/>
+                <StackPanel Margin="0,8,0,0">
+                    <TextBlock x:Name="txtBettNummer"
+                       Text="Bett: B001"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="0,0,0,10"/>
+                    <TextBlock x:Name="txtZimmer"
+                       Text="Zimmer: 1"
+                       FontSize="14"
+                       Margin="0,0,0,15"/>
+                    <TextBlock Text="Status:"
+                       FontSize="12"
+                       FontWeight="Bold"
+                       Margin="0,0,0,5"/>
+                    <TextBlock x:Name="txtStatus"
+                       Text="Belegt"
+                       FontSize="14"
+                       Margin="0,0,0,15"/>
+                    <TextBlock Text="Wartung:"
+                       FontSize="12"
+                       FontWeight="Bold"
+                       Margin="0,0,0,5"/>
+                    <TextBlock x:Name="txtWartung"
+                       Text="Sauber"
+                       FontSize="14"
+                       Margin="0,0,0,15"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>

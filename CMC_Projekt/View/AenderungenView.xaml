@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="CMC_Projekt.View.AenderungenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Überschrift -->
+        <Border Grid.Row="0" 
+                Background="#2C3E50" 
+                Padding="20">
+            <TextBlock Text="Änderungen vornehmen" 
+                       FontSize="24" 
+                       FontWeight="Bold"
+                       Foreground="White"
+                       HorizontalAlignment="Center"/>
+        </Border>
+
+        <!-- Scrollbare Liste mit Eingabefeldern -->
+        <ScrollViewer Grid.Row="1" 
+                      VerticalScrollBarVisibility="Auto"
+                      Margin="20">
+            <StackPanel x:Name="BettenContainer">
+                <!-- Betten werden hier dynamisch eingefügt -->
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

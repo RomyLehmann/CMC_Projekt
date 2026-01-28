@@ -1,0 +1,30 @@
+﻿<Window x:Class="CMC_Projekt.View.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CMC_Projekt.View"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="450" Width="500">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" Margin="10">
+            <Image Source="C:\Dokumente\6. Semester\CMCProjekt\CMCProjekt\Images\CMC.jfif"
+                   Width="292" Height="183" Margin="0,0,0,20"/>
+            <Label Content="Benutzername:" FontSize="18" Foreground="Black" />
+            <TextBox x:Name="TxtUsername" FontSize="16" Margin="0,0,0,10" Height="25"/>
+            <Label Content="Passwort:" FontSize="18" Foreground="Black"/>
+            <PasswordBox x:Name="TxtPassword" Margin="0,0,0,20" Height="25"/>
+
+
+            <Button Content="Anmelden"
+                        Width="150" 
+                        Height="50"
+                        FontSize="18"
+                        FontWeight="DemiBold"
+                        Foreground="Black">
+            </Button>
+
+        </StackPanel>
+
+    </Grid>
+</Window>
