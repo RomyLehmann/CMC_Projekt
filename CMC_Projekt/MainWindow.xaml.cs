@@ -57,7 +57,19 @@ namespace CMC_Projekt
             MainContent.Content = new AenderungenView();
             MenuPanel.Visibility = Visibility.Collapsed;
         }
+        private void btnNeuesBett_Click(object sender, RoutedEventArgs e)
+        {
+            var neuesBettView = new NeuesBettView();
 
+            // Navigation zurück zur Übersicht nach dem Speichern
+            neuesBettView.NavigateToUebersicht = () =>
+            {
+                MainContent.Content = new UebersichtView();
+            };
+
+            MainContent.Content = neuesBettView;
+            MenuPanel.Visibility = Visibility.Collapsed;
+        }
 
     }
 }

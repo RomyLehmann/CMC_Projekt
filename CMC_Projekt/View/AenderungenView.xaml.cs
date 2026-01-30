@@ -1,4 +1,5 @@
 ﻿using CMC_Projekt;
+using CMC_Projekt.Services;  // ← FÜR BettData
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -169,19 +170,21 @@ namespace CMC_Projekt.View
             Child = mainGrid;
         }
 
-        private void SpeichernClicked()
+        private async void SpeichernClicked()
         {
             if (statusComboBox.SelectedItem == null || wartungComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Bitte wählen Sie Status und Wartung aus!", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Bitte wählen Sie Status und Wartung aus!", "Fehler",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             string neuerStatus = statusComboBox.SelectedItem.ToString();
             string neueWartung = wartungComboBox.SelectedItem.ToString();
 
-            // ECHTES SPEICHERN in den zentralen Datenmanager
-            bool erfolg = BedDataManager.UpdateBett(bettData.BettNummer, neuerStatus, neueWartung);
+            // ASYNC UPDATE ans Backend
+            bool erfolg = await BedDataManager.UpdateBettAsync(
+                bettData.BettNummer, neuerStatus, neueWartung);
 
             if (erfolg)
             {
@@ -197,7 +200,11 @@ namespace CMC_Projekt.View
             }
             else
             {
-                MessageBox.Show("Fehler beim Speichern!", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    "Fehler beim Speichern!\n\nBackend nicht erreichbar oder Verbindungsfehler.",
+                    "Fehler",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
         }
     }

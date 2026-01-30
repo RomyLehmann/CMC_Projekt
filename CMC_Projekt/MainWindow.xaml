@@ -63,8 +63,9 @@
                             FontSize="14"
                             Click="btnAenderungen_Click"/>
 
-                    <Button x:Name="btnNeuesGeraet"
-                            Content="Neues Gerät hinzufügen" 
+                    <Button x:Name="btnNeuesBett"
+                            Click="btnNeuesBett_Click"
+                            Content="Neues Bett hinzufügen" 
                             Height="45" 
                             Margin="0,5"
                             FontSize="14"

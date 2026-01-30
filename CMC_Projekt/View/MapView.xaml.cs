@@ -20,6 +20,13 @@ namespace CMC_Projekt.View
             InitializeComponent();
             bettPunkte = new Dictionary<string, Ellipse>();
             this.Loaded += MapView_Loaded;
+            BedDataManager.DatenAktualisiert += () =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    AktualisiereKarte();
+                });
+            };
         }
 
         private void MapView_Loaded(object sender, RoutedEventArgs e)

@@ -2,6 +2,7 @@
 using CMC_Projekt.View;
 using System.Collections.Generic;
 using System.Linq;
+using CMC_Projekt.Services;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,6 +22,15 @@ namespace CMC_Projekt.View
         {
             InitializeComponent();
             LadeBettenDaten();
+            // Event für automatische Updates
+            BedDataManager.DatenAktualisiert += () =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    LadeBettenDaten();
+                });
+            };
+
         }
 
         private void LadeBettenDaten()
@@ -153,5 +163,6 @@ namespace CMC_Projekt.View
             wartungAufsteigend = !wartungAufsteigend;
             BettenDataGrid.ItemsSource = aktuelleListe;
         }
+
     }
 }
