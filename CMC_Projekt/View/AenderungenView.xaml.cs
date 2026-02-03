@@ -1,5 +1,5 @@
 ﻿using CMC_Projekt;
-using CMC_Projekt.Services;  // ← FÜR BettData
+using CMC_Projekt.Services;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -71,6 +71,7 @@ namespace CMC_Projekt.View
         private BettData bettData;
         private ComboBox statusComboBox;
         private ComboBox wartungComboBox;
+        private Button speichernButton;
 
         public BettControl(BettData bett)
         {
@@ -150,7 +151,7 @@ namespace CMC_Projekt.View
 
             mainGrid.Children.Add(wartungStack);
 
-            var speichernButton = new Button
+            speichernButton = new Button
             {
                 Content = "Speichern",
                 Width = 130,
@@ -163,14 +164,14 @@ namespace CMC_Projekt.View
                 Cursor = System.Windows.Input.Cursors.Hand,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            speichernButton.Click += (s, e) => SpeichernClicked();
+            speichernButton.Click += SpeichernClicked;
             Grid.SetColumn(speichernButton, 3);
             mainGrid.Children.Add(speichernButton);
 
             Child = mainGrid;
         }
 
-        private async void SpeichernClicked()
+        private async void SpeichernClicked(object sender, RoutedEventArgs e)
         {
             if (statusComboBox.SelectedItem == null || wartungComboBox.SelectedItem == null)
             {
@@ -179,32 +180,99 @@ namespace CMC_Projekt.View
                 return;
             }
 
+            // Button deaktivieren
+            speichernButton.IsEnabled = false;
+            speichernButton.Content = "Speichere...";
+            var originalBackground = speichernButton.Background;
+            speichernButton.Background = Brushes.Gray;
+
             string neuerStatus = statusComboBox.SelectedItem.ToString();
             string neueWartung = wartungComboBox.SelectedItem.ToString();
 
-            // ASYNC UPDATE ans Backend
-            bool erfolg = await BedDataManager.UpdateBettAsync(
-                bettData.BettNummer, neuerStatus, neueWartung);
+            System.Console.WriteLine($"=== SPEICHERN GESTARTET ===");
+            System.Console.WriteLine($"Bett: {bettData.BettNummer}");
+            System.Console.WriteLine($"Neuer Status: {neuerStatus}");
+            System.Console.WriteLine($"Neue Wartung: {neueWartung}");
 
-            if (erfolg)
+            try
             {
-                // Lokale Daten auch aktualisieren
-                bettData.Status = neuerStatus;
-                bettData.Wartung = neueWartung;
+                // WICHTIG: Prüfe zuerst ob Backend erreichbar ist
+                if (!BedDataManager.IstBackendErreichbar())
+                {
+                    MessageBox.Show(
+                        "⚠️ BACKEND NICHT ERREICHBAR!\n\n" +
+                        "Das Backend antwortet nicht.\n\n" +
+                        "Bitte prüfen Sie:\n" +
+                        "1. Läuft das Backend-Projekt?\n" +
+                        "2. Ist der Port korrekt? (Standard: 5001)\n" +
+                        "3. Öffnen Sie https://localhost:5001 im Browser\n" +
+                        "4. Prüfen Sie die Konsole für Fehlermeldungen",
+                        "Backend-Fehler",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
 
-                MessageBox.Show(
-                    $"Änderungen für {bettData.BettNummer} gespeichert!\n\nStatus: {bettData.Status}\nWartung: {bettData.Wartung}",
-                    "Erfolgreich gespeichert",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
+                    speichernButton.IsEnabled = true;
+                    speichernButton.Content = "Speichern";
+                    speichernButton.Background = originalBackground;
+                    return;
+                }
+
+                // UPDATE durchführen
+                bool erfolg = await BedDataManager.UpdateBettAsync(
+                    bettData.BettNummer, neuerStatus, neueWartung);
+
+                if (erfolg)
+                {
+                    System.Console.WriteLine($"✅ SPEICHERN ERFOLGREICH");
+
+                    bettData.Status = neuerStatus;
+                    bettData.Wartung = neueWartung;
+
+                    MessageBox.Show(
+                        $"✅ Änderungen gespeichert!\n\n" +
+                        $"Bett: {bettData.BettNummer}\n" +
+                        $"Status: {bettData.Status}\n" +
+                        $"Wartung: {bettData.Wartung}",
+                        "Erfolgreich",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                }
+                else
+                {
+                    System.Console.WriteLine($"❌ SPEICHERN FEHLGESCHLAGEN");
+
+                    MessageBox.Show(
+                        "❌ Fehler beim Speichern!\n\n" +
+                        "Mögliche Ursachen:\n" +
+                        "• Backend läuft nicht\n" +
+                        "• Falscher Port (prüfen Sie BettenApiService.cs)\n" +
+                        "• Netzwerkproblem\n\n" +
+                        "Prüfen Sie die OUTPUT-Konsole in Visual Studio\n" +
+                        "für detaillierte Fehlermeldungen!",
+                        "Fehler",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                }
             }
-            else
+            catch (System.Exception ex)
             {
+                System.Console.WriteLine($"❌ EXCEPTION: {ex.Message}");
+                System.Console.WriteLine($"❌ STACK: {ex.StackTrace}");
+
                 MessageBox.Show(
-                    "Fehler beim Speichern!\n\nBackend nicht erreichbar oder Verbindungsfehler.",
-                    "Fehler",
+                    $"❌ Kritischer Fehler!\n\n" +
+                    $"Fehler: {ex.Message}\n\n" +
+                    $"Prüfen Sie die OUTPUT-Konsole für Details!",
+                    "Kritischer Fehler",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Button wieder aktivieren
+                speichernButton.IsEnabled = true;
+                speichernButton.Content = "Speichern";
+                speichernButton.Background = originalBackground;
             }
         }
     }

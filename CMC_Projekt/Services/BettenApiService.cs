@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CMC_Projekt.Services
@@ -9,21 +11,29 @@ namespace CMC_Projekt.Services
     public class BettenApiService
     {
         private readonly HttpClient _httpClient;
-        private const string BASE_URL = "https://localhost:5001/api/Betten"; // ← PASSE DEINEN PORT AN!
+        private const string BASE_URL = "https://localhost:5001/api/Betten";
 
-        public BettenApiService()
+        private static readonly HttpClient _sharedHttpClient;
+
+        static BettenApiService()
         {
-            // SSL-Zertifikat-Fehler in Entwicklung ignorieren
             var handler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
             };
 
-            _httpClient = new HttpClient(handler)
+            _sharedHttpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri(BASE_URL),
-                Timeout = TimeSpan.FromSeconds(5)
+                Timeout = TimeSpan.FromSeconds(30)
             };
+            _sharedHttpClient.BaseAddress = new Uri(BASE_URL);
+
+            Console.WriteLine($"🌐 Shared HttpClient erstellt für {BASE_URL}");
+        }
+
+        public BettenApiService()
+        {
+            _httpClient = _sharedHttpClient;
         }
 
         // GET alle Betten
@@ -32,73 +42,96 @@ namespace CMC_Projekt.Services
             try
             {
                 var response = await _httpClient.GetAsync("");
-                response.EnsureSuccessStatusCode();
-                return await response.Content.ReadFromJsonAsync<List<BettData>>();
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<List<BettData>>();
+                }
+                return null;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Fehler beim Laden der Betten: {ex.Message}");
+                Console.WriteLine($"❌ GET Fehler: {ex.Message}");
                 return null;
             }
         }
 
-        // GET einzelnes Bett
-        public async Task<BettData?> GetBettAsync(string bettNummer)
-        {
-            try
-            {
-                var response = await _httpClient.GetAsync($"/{bettNummer}");
-                response.EnsureSuccessStatusCode();
-                return await response.Content.ReadFromJsonAsync<BettData>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"❌ Fehler beim Laden von Bett {bettNummer}: {ex.Message}");
-                return null;
-            }
-        }
-
-        // PUT Bett aktualisieren
+        // PUT Bett aktualisieren - VERBESSERT
         public async Task<bool> UpdateBettAsync(string bettNummer, string neuerStatus, string neueWartung)
         {
             try
             {
+                var url = $"{BASE_URL}/{bettNummer}";
                 var updateDto = new { Status = neuerStatus, Wartung = neueWartung };
-                var response = await _httpClient.PutAsJsonAsync($"/{bettNummer}", updateDto);
+
+                Console.WriteLine($"📤 PUT Request wird vorbereitet...");
+                Console.WriteLine($"🔗 URL: {url}");
+                Console.WriteLine($"📦 Daten: Status={neuerStatus}, Wartung={neueWartung}");
+
+                var json = JsonSerializer.Serialize(updateDto);
+                Console.WriteLine($"📄 JSON: {json}");
+
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                Console.WriteLine($"🚀 Sende Request...");
+                var response = await _httpClient.PutAsync(url, content);
+
+                Console.WriteLine($"📊 Response empfangen: {response.StatusCode}");
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine($"✅ Bett {bettNummer} aktualisiert: {neuerStatus}, {neueWartung}");
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"✅ UPDATE ERFOLGREICH!");
+                    Console.WriteLine($"📄 Response: {responseBody}");
                     return true;
                 }
-
-                Console.WriteLine($"❌ Update fehlgeschlagen: {response.StatusCode}");
+                else
+                {
+                    var errorBody = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"❌ UPDATE FEHLGESCHLAGEN: {response.StatusCode}");
+                    Console.WriteLine($"❌ Error: {errorBody}");
+                    return false;
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"❌ HTTP REQUEST EXCEPTION: {ex.Message}");
+                Console.WriteLine($"❌ InnerException: {ex.InnerException?.Message}");
+                return false;
+            }
+            catch (TaskCanceledException ex)
+            {
+                Console.WriteLine($"❌ TIMEOUT: {ex.Message}");
                 return false;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Fehler beim Update von Bett {bettNummer}: {ex.Message}");
+                Console.WriteLine($"❌ EXCEPTION: {ex.GetType().Name}");
+                Console.WriteLine($"❌ Message: {ex.Message}");
+                Console.WriteLine($"❌ Stack: {ex.StackTrace}");
                 return false;
             }
         }
 
-        // POST neues Bett erstellen
+        // POST neues Bett
         public async Task<BettData?> CreateBettAsync(BettData bett)
         {
             try
             {
                 var response = await _httpClient.PostAsJsonAsync("", bett);
-                response.EnsureSuccessStatusCode();
-                return await response.Content.ReadFromJsonAsync<BettData>();
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<BettData>();
+                }
+                return null;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Fehler beim Erstellen von Bett: {ex.Message}");
+                Console.WriteLine($"❌ POST Fehler: {ex.Message}");
                 return null;
             }
         }
 
-        // DELETE Bett löschen
+        // DELETE Bett
         public async Task<bool> DeleteBettAsync(string bettNummer)
         {
             try
@@ -108,13 +141,13 @@ namespace CMC_Projekt.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Fehler beim Löschen von Bett {bettNummer}: {ex.Message}");
+                Console.WriteLine($"❌ DELETE Fehler: {ex.Message}");
                 return false;
             }
         }
     }
 
-    // DTO passend zum Backend
+    // DTO
     public class BettData
     {
         public string BettNummer { get; set; } = string.Empty;
